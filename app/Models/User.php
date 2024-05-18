@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\User\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,15 +13,26 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const
+        FIELD_NAME = 'name',
+        FIELD_EMAIL = 'email',
+        FIELD_PASSWORD = 'password',
+        FIELD_ROLE = 'role',
+        FIELD_RATING = 'rating',
+        FIELD_REMEMBER_TOKEN = 'remember_token',
+        FIELD_EMAIL_VERIFIED_AT = 'email_verified_at';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        self::FIELD_NAME,
+        self::FIELD_EMAIL,
+        self::FIELD_PASSWORD,
+        self::FIELD_ROLE,
+        self::FIELD_RATING,
     ];
 
     /**
@@ -29,8 +41,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        self::FIELD_PASSWORD,
+        self::FIELD_REMEMBER_TOKEN,
     ];
 
     /**
@@ -39,6 +51,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        self::FIELD_EMAIL_VERIFIED_AT => 'datetime',
+        self::FIELD_ROLE => UserRole::class,
     ];
 }

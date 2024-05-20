@@ -15,9 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $roles = array_map(fn ($role) => $role->value, UserRole::cases());
-
-            $table->enum('role', $roles)->default(UserRole::USER);
+            $table->string('role')->default(UserRole::User->value);
             $table->double('rating')->default(null)->nullable();
         });
     }

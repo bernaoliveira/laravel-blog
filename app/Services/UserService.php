@@ -18,8 +18,6 @@ class UserService
 
         $user->save();
 
-        return response()->json([
-            'message' => 'User created successfully'
-        ]);
+        return $user;
     }
 }

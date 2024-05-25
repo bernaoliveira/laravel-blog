@@ -30,7 +30,19 @@ class AuthController extends Controller
 
     public function register(RegistrationPostRequest $request)
     {
-        return $this->userService->create($request);
+        $user = $this->userService->create($request);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Registration failed'
+            ], 500);
+        }
+
+        Auth::login($user);
+
+        return response()->json([
+            'message' => 'Registration successful'
+        ]);
     }
 
     public function logout()

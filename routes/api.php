@@ -26,4 +26,8 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('articles')->group(function () {
     Route::get('/', [ArticleController::class, 'index']);
+    Route::post('/', [ArticleController::class, 'store']);
+    Route::get('{slug}', [ArticleController::class, 'show']);
+    Route::put('{slug}', [ArticleController::class, 'update']);
+    Route::delete('{slug}', [ArticleController::class, 'destroy']);
 });

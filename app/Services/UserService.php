@@ -9,15 +9,6 @@ class UserService
 {
     public function create(RegistrationPostRequest $request)
     {
-        $credentials = $request->safe()->only('name', 'email', 'password');
-
-        $user = new User;
-        $user->name = $credentials['name'];
-        $user->email = $credentials['email'];
-        $user->password = bcrypt($credentials['password']);
-
-        $user->save();
-
-        return $user;
+        return User::create($request->safe()->only('name', 'email', 'password'));
     }
 }

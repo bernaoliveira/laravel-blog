@@ -53,7 +53,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         self::FIELD_EMAIL_VERIFIED_AT => 'datetime',
-        self::FIELD_ROLE => UserRole::class,
     ];
 
     // Relationships

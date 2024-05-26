@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Filters\PaginationFilter;
+use App\Filters\TextLikeFilter;
+use App\Traits\FilterableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Article extends Model
 {
     use HasFactory;
+    use FilterableTrait;
 
     public const
         FIELD_SLUG = 'slug',
@@ -29,6 +33,14 @@ class Article extends Model
     protected $casts = [
         self::FIELD_RATING => 'double',
         self::FIELD_VOTES => 'integer',
+    ];
+
+    public static array $filters = [
+        PaginationFilter::class => [],
+        TextLikeFilter::class => [
+            'name' => self::FIELD_TITLE,
+            'column' => self::FIELD_TITLE,
+        ],
     ];
 
     public function user(): BelongsTo

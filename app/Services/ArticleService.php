@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\User\UserRole;
 use App\Http\Requests\CreateArticlePostRequest;
 use App\Models\Article;
+use App\Utils\FilteredList;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ class ArticleService
 {
     public function getFilteredList(Request $request)
     {
-        return Article::filtered($request)->get();
+        return FilteredList::get(new Article, $request);
     }
 
     public function create(CreateArticlePostRequest $request) {

@@ -17,10 +17,8 @@ abstract class Filter
 
     public function setOptions($options)
     {
-        if (isset($options['name']) && isset($options['column'])) {
-            $this->name = $this->name_modification . $options['name'];
-            $this->column = $options['column'];
-        }
+        $this->name = $this->name_modification . ($options['name'] ?? '');
+        $this->column = $options['column'] ?? '';
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\PaginationFilter;
+use App\Filters\RelationFilter;
 use App\Filters\TextLikeFilter;
 use App\Traits\FilterableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,6 +40,10 @@ class Article extends Model
 
     public static array $filters = [
         PaginationFilter::class => [],
+        RelationFilter::class => [
+            'name' => 'user',
+            'column' => 'user',
+        ],
         TextLikeFilter::class => [
             'name' => self::FIELD_TITLE,
             'column' => self::FIELD_TITLE,

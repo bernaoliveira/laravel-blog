@@ -41,8 +41,10 @@ class Article extends Model
     public static array $filters = [
         PaginationFilter::class => [],
         RelationFilter::class => [
-            'name' => 'user',
-            'column' => 'user',
+            'relations' => [
+                'categories',
+                'user',
+            ],
         ],
         TextLikeFilter::class => [
             'name' => self::FIELD_TITLE,

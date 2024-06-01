@@ -14,11 +14,12 @@ class RelationFilter extends Filter
 
     public function apply(Builder $query, Request $request)
     {
-        $value = $request->boolean($this->name);
-        if (!$value) {
-            return $query;
+        foreach ($this->relations as $relation) {
+            if ($request->boolean($this->name . $relation)) {
+                $query->with($relation);
+            }
         }
 
-        return $query->with($this->column);
+        return $query;
     }
 }

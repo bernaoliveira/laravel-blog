@@ -1,34 +1,23 @@
 <script setup>
 import {onMounted, ref} from "vue";
 
-import Header from "../../components/Header.vue";
 import ArticleCard from "../../components/ArticleCard.vue";
+import { useArticles } from "../../composables/useArticles";
 
 const search = ref('');
-const articles = ref([]);
-const page = ref(1);
+const categories = ref([]);
 
-onMounted(async () => {
-    await fetchArticles();
-});
+const { articles, fetchArticles } = useArticles();
 
-const fetchArticles = async (filters) => {
-    const params = new URLSearchParams({
-        with_relation_user: true,
-        with_relation_categories: true,
-        limit: 20,
-        offset: (page.value - 1) * 20,
-        ...filters,
-    });
-
+const fetchCategories = async () => {
     try {
-        const response = await fetch(`http://localhost/api/articles?+${params}`, {
+        const response = await fetch('http://localhost/api/categories', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-        articles.value = (await response.json()).result;
+        categories.value = (await response.json()).result;
     } catch (error) {
         console.error(error);
     }
@@ -37,13 +26,16 @@ const fetchArticles = async (filters) => {
 const handleSearch = async () => {
     await fetchArticles({ with_title: search.value });
 }
+
+onMounted(async () => {
+    await fetchArticles();
+    await fetchCategories();
+});
 </script>
 
 <template>
-    <div class="overflow-x-hidden bg-gray-100 min-h-screen">
-        <Header />
-
-        <div class="container px-6 py-8 mx-auto max-w-4xl">
+    <div class="flex">
+        <div class="max-w-4xl">
             <form class="mb-6" @submit.prevent="handleSearch">
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                 <div class="relative">
@@ -61,6 +53,26 @@ const handleSearch = async () => {
                 :article="article"
                 class="mb-4"
             />
+        </div>
+
+        <div class="ml-6">
+            <div class="bg-white p-6 rounded-lg shadow-md w-96">
+                <h2 class="text-lg font-semibold text-gray-700">Categories</h2>
+                <ul class="mt-4">
+                    <li
+                        v-for="category in categories"
+                        :key="category.id"
+                        class="flex items-center justify-between py-2"
+                    >
+                        <router-link
+                            :to="{ name: 'categoriesArticles', params: {slug: category.slug}}"
+                            class="text-gray-700 hover:underline"
+                        >
+                            {{ category.name }}
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>

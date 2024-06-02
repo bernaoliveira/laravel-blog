@@ -35,7 +35,7 @@ onMounted(async () => {
 
 <template>
     <div class="flex">
-        <div class="max-w-4xl">
+        <div class="w-full max-w-4xl">
             <form class="mb-6" @submit.prevent="handleSearch">
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                 <div class="relative">
@@ -48,11 +48,16 @@ onMounted(async () => {
             </form>
 
             <ArticleCard
+                v-if="articles.length > 0"
                 v-for="article in articles"
                 :key="article.id"
                 :article="article"
                 class="mb-4"
             />
+
+            <div v-else class="flex items-center justify-center h-96">
+                <p class="text-lg font-semibold text-gray-700">No articles found</p>
+            </div>
         </div>
 
         <div class="ml-6">

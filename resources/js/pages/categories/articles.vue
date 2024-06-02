@@ -9,7 +9,7 @@ const route = useRoute();
 const fetchCategoryArticles = async () => {
     try {
         const params = new URLSearchParams({
-            with_relation_category: true,
+            with_relation_categories: true,
             with_relation_user: true,
         });
 

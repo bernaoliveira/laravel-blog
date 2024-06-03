@@ -40,7 +40,6 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN npm install
-RUN npm run build
 
 RUN composer install --no-dev --no-interaction --optimize-autoloader
 

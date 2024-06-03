@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Filters\PaginationFilter;
 use App\Filters\RelationFilter;
 use App\Filters\TextLikeFilter;
 use App\Traits\FilterableTrait;
@@ -39,7 +38,6 @@ class Article extends Model
     ];
 
     public static array $filters = [
-        PaginationFilter::class => [],
         RelationFilter::class => [
             'relations' => [
                 'categories',

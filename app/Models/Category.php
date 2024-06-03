@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Filters\PaginationFilter;
 use App\Filters\TextLikeFilter;
 use App\Traits\FilterableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +25,6 @@ class Category extends Model
     ];
 
     public static array $filters = [
-        PaginationFilter::class => [],
         TextLikeFilter::class => [
             'name' => self::FIELD_NAME,
             'column' => self::FIELD_NAME,

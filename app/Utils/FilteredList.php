@@ -9,13 +9,14 @@ class FilteredList
 {
     public static function get(Model $model, Request $request)
     {
-        $total = $model::count();
-        $collection = $model::filtered($request)->get();
+        $limit = $request->input('limit', 20);
+        $offset = $request->input('offset', 0);
+
+        $filtered = $model::filtered($request);
 
         return [
-            'total' => $total,
-            'count' => $collection->count(),
-            'result' => $collection,
+            'total' => $filtered->count(),
+            'result' => $filtered->limit($limit)->offset($offset)->get(),
         ];
     }
 }

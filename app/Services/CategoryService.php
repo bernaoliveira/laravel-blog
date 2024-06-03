@@ -23,16 +23,17 @@ class CategoryService
 
     public function getArticlesBySlug(Request $request, $slug)
     {
+        $limit = $request->input('limit', 20);
+        $offset = $request->input('offset', 0);
+
         $articles = Article::filtered($request)
             ->whereHas('categories', function ($query) use ($slug) {
                 $query->where('slug', $slug);
-            })
-            ->get();
+            });
 
         return [
-            'total' => Article::count(),
-            'count' => $articles->count(),
-            'result' => $articles,
+            'total' => $articles->count(),
+            'result' => $articles->limit($limit)->offset($offset)->get(),
         ];
     }
 

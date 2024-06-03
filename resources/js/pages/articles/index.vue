@@ -3,11 +3,14 @@ import {onMounted, ref} from "vue";
 
 import ArticleCard from "../../components/ArticleCard.vue";
 import { useArticles } from "../../composables/useArticles";
+import Pagination from "../../components/Pagination.vue";
 
 const search = ref('');
 const categories = ref([]);
 
-const { articles, fetchArticles } = useArticles();
+const { articles, fetchArticles, changePage, page, total } = useArticles();
+
+const container = ref(null);
 
 const fetchCategories = async () => {
     try {
@@ -24,17 +27,25 @@ const fetchCategories = async () => {
 }
 
 const handleSearch = async () => {
+    await changePage(1);
     await fetchArticles({ with_title: search.value });
 }
 
+const handlePageChange = async (value) => {
+    await changePage(value);
+    await fetchArticles({ with_title: search.value });
+
+    container.value?.scrollIntoView({ behavior: 'smooth' });
+}
+
 onMounted(async () => {
-    await fetchArticles();
+    await fetchArticles({ with_title: search.value });
     await fetchCategories();
 });
 </script>
 
 <template>
-    <div class="flex">
+    <div ref="container" class="flex">
         <div class="w-full max-w-4xl">
             <form class="mb-6" @submit.prevent="handleSearch">
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
@@ -58,6 +69,13 @@ onMounted(async () => {
             <div v-else class="flex items-center justify-center h-96">
                 <p class="text-lg font-semibold text-gray-700">No articles found</p>
             </div>
+
+            <Pagination
+                :page="page"
+                :total="total"
+                :limit="20"
+                @page="handlePageChange"
+            />
         </div>
 
         <div class="ml-6">

@@ -1,8 +1,13 @@
 import {ref} from "vue";
+import {useRoute, useRouter} from "vue-router";
 
 export function useArticles() {
+    const route = useRoute();
+    const router = useRouter();
+
     const articles = ref([]);
-    const page = ref(1);
+    const page = ref(route.query.page ? parseInt(route.query.page) : 1);
+    const total = ref(0);
 
     const fetchArticles = async (filters) => {
         const params = new URLSearchParams({
@@ -20,10 +25,24 @@ export function useArticles() {
                     'Content-Type': 'application/json',
                 },
             });
-            articles.value = (await response.json()).result;
+
+            const data = await response.json();
+            articles.value = data.result;
+
+            total.value = data.total;
         } catch (error) {
             console.error(error);
         }
     }
-  return { articles, fetchArticles, page };
+
+    const changePage = async (newPage, filters) => {
+        page.value = newPage;
+
+        const query = { ...route.query, page: newPage };
+        await router.push({query});
+
+        await fetchArticles(filters);
+    }
+
+    return { articles, fetchArticles, changePage, page, total };
 }

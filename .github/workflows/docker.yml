@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker images
-      run: docker-compose up --build -d && docker compose exec app composer install && docker compose exec app php artisan migrate && docker compose exec app php artisan optimize:clear && docker compose exec app npm run build
+      run: docker-compose up --build -d && docker-compose exec app composer install && docker-compose exec app php artisan migrate && docker-compose exec app php artisan optimize:clear && docker-compose exec app npm run build

@@ -19,7 +19,6 @@ class User extends Authenticatable
         FIELD_EMAIL = 'email',
         FIELD_PASSWORD = 'password',
         FIELD_ROLE = 'role',
-        FIELD_RATING = 'rating',
         FIELD_REMEMBER_TOKEN = 'remember_token',
         FIELD_EMAIL_VERIFIED_AT = 'email_verified_at';
 
@@ -33,7 +32,6 @@ class User extends Authenticatable
         self::FIELD_EMAIL,
         self::FIELD_PASSWORD,
         self::FIELD_ROLE,
-        self::FIELD_RATING,
     ];
 
     /**

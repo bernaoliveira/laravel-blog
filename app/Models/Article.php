@@ -20,21 +20,12 @@ class Article extends Model
     public const
         FIELD_SLUG = 'slug',
         FIELD_TITLE = 'title',
-        FIELD_CONTENT = 'content',
-        FIELD_RATING = 'rating',
-        FIELD_VOTES = 'votes';
+        FIELD_CONTENT = 'content';
 
     protected $fillable = [
         self::FIELD_SLUG,
         self::FIELD_TITLE,
         self::FIELD_CONTENT,
-        self::FIELD_RATING,
-        self::FIELD_VOTES,
-    ];
-
-    protected $casts = [
-        self::FIELD_RATING => 'double',
-        self::FIELD_VOTES => 'integer',
     ];
 
     public static array $filters = [
@@ -58,5 +49,15 @@ class Article extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function rates()
+    {
+        return $this->hasMany(Rate::class);
+    }
+
+    public function rating()
+    {
+        return round($this->rates()->avg('value'), 2);
     }
 }

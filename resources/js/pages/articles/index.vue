@@ -28,18 +28,18 @@ const fetchCategories = async () => {
 
 const handleSearch = async () => {
     await changePage(1);
-    await fetchArticles({ with_title: search.value });
+    await fetchArticles({ with_like_title: search.value });
 }
 
 const handlePageChange = async (value) => {
     await changePage(value);
-    await fetchArticles({ with_title: search.value });
+    await fetchArticles({ with_like_title: search.value });
 
     container.value?.scrollIntoView({ behavior: 'smooth' });
 }
 
 onMounted(async () => {
-    await fetchArticles({ with_title: search.value });
+    await fetchArticles({ with_like_title: search.value });
     await fetchCategories();
 });
 </script>

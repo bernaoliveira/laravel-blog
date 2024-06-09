@@ -64,6 +64,14 @@ class ArticleService
         ]);
     }
 
+    public function updateRating($article)
+    {
+        $rating = round($article->rates->avg('value'), 1);
+        $article->update([
+            $article::FIELD_RATING => $rating,
+        ]);
+    }
+
     private function generateSlug($title)
     {
         return Str::slug($title);

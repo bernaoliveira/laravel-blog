@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Filters\TextLikeFilter;
+use App\Filters\WhereLikeFilter;
 use App\Traits\FilterableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,9 +25,11 @@ class Category extends Model
     ];
 
     public static array $filters = [
-        TextLikeFilter::class => [
-            'name' => self::FIELD_NAME,
-            'column' => self::FIELD_NAME,
+        WhereLikeFilter::class => [
+            [
+                'name' => self::FIELD_NAME,
+                'column' => self::FIELD_NAME,
+            ],
         ],
     ];
 

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Filters\Articles\RatingFilter;
 use App\Filters\RelationFilter;
-use App\Filters\TextLikeFilter;
+use App\Filters\WhereLikeFilter;
+use App\Filters\WhereValueFilter;
 use App\Traits\FilterableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,12 +22,14 @@ class Article extends Model
     public const
         FIELD_SLUG = 'slug',
         FIELD_TITLE = 'title',
-        FIELD_CONTENT = 'content';
+        FIELD_CONTENT = 'content',
+        FIELD_RATING = 'rating';
 
     protected $fillable = [
         self::FIELD_SLUG,
         self::FIELD_TITLE,
         self::FIELD_CONTENT,
+        self::FIELD_RATING,
     ];
 
     public static array $filters = [
@@ -35,10 +39,23 @@ class Article extends Model
                 'user',
             ],
         ],
-        TextLikeFilter::class => [
-            'name' => self::FIELD_TITLE,
-            'column' => self::FIELD_TITLE,
+        WhereLikeFilter::class => [
+            [
+                'name' => self::FIELD_TITLE,
+                'column' => self::FIELD_TITLE,
+            ],
         ],
+        WhereValueFilter::class => [
+            [
+                'name' => 'user_id',
+                'column' => 'user_id',
+            ],
+            [
+                'name' => 'category_id',
+                'column' => 'category_id',
+            ]
+        ],
+        RatingFilter::class => [],
     ];
 
     public function user(): BelongsTo
@@ -54,10 +71,5 @@ class Article extends Model
     public function rates()
     {
         return $this->hasMany(Rate::class);
-    }
-
-    public function rating()
-    {
-        return round($this->rates()->avg('value'), 2);
     }
 }

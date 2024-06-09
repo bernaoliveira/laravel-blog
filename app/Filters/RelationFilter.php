@@ -15,7 +15,7 @@ class RelationFilter extends Filter
     public function apply(Builder $query, Request $request)
     {
         foreach ($this->relations as $relation) {
-            if ($request->boolean($this->name . $relation)) {
+            if ($request->boolean($this->name_modification . $relation)) {
                 $query->with($relation);
             }
         }

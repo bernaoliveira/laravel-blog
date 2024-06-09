@@ -7,21 +7,26 @@ use Illuminate\Http\Request;
 
 abstract class Filter
 {
-    public string $name;
-
-    public string $column;
-
-    public string $name_modification = '';
+    public array $filters = [];
 
     public array $relations = [];
+
+    public string $name_modification = '';
 
     abstract public function apply(Builder $query, Request $request);
 
     public function setOptions($options)
     {
-        $this->name = $this->name_modification . ($options['name'] ?? '');
-        $this->column = $options['column'] ?? '';
-        $this->relations = $options['relations'] ?? [];
+        if (isset($options['relations'])) {
+            $this->relations = $options['relations'];
+        } else {
+            $this->filters = array_map(function ($option) {
+                return [
+                    'name' => $option['name'],
+                    'column' => $option['column'],
+                ];
+            }, $options);
+        }
 
         return $this;
     }

@@ -11,7 +11,7 @@ class RatingFilter extends Filter
     public function apply(Builder $query, Request $request)
     {
         $rating = $request->integer('with_rating');
-        if (!isset($rating)) {
+        if (!$rating) {
             return $query;
         }
 

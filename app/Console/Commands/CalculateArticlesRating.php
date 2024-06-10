@@ -29,10 +29,10 @@ class CalculateArticlesRating extends Command
      */
     public function handle()
     {
+        $articleService = new ArticleService();
         $articles = Article::all();
-        $articles->chunk(100)->each(function ($articles) {
-            $articles->each(function ($article) {
-                $articleService = new ArticleService();
+        $articles->chunk(100)->each(function ($articles) use ($articleService) {
+            $articles->each(function ($article) use ($articleService) {
                 $articleService->updateRating($article);
             });
         });

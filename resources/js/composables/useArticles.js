@@ -19,7 +19,7 @@ export function useArticles() {
         });
 
         try {
-            const response = await fetch(`http://localhost/api/articles?+${params}`, {
+            const response = await fetch(`http://localhost/api/articles?${params}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -50,6 +50,7 @@ const { article } = defineProps(['article']);
                 to="/"
                 class="text-2xl font-bold text-gray-700 hover:underline"
             >
+                ({{ article.rating }})
                 {{ article.title }}
             </router-link>
 

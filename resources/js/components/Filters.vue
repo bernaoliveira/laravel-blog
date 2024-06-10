@@ -1,13 +1,9 @@
 <script setup>
-import {onMounted, reactive, ref, toRef, watch} from "vue";
+import {onMounted, ref, toRef} from "vue";
 
 const $emit = defineEmits(['filter']);
 
-const filters = reactive({
-    with_like_title: '',
-    with_user_id: '',
-    with_rating: '',
-});
+const { filters } = defineProps(['filters']);
 const authors = ref([]);
 
 const search = toRef(filters, 'with_like_title');
@@ -34,10 +30,6 @@ const fetchAuthors = async () => {
 
 onMounted(() => {
     fetchAuthors();
-});
-
-watch(filters, (value) => {
-    $emit('filter', value);
 });
 </script>
 

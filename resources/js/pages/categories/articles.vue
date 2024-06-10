@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import { useRoute } from "vue-router";
 import ArticleCard from "../../components/ArticleCard.vue";
 import Filters from "../../components/Filters.vue";
@@ -10,6 +10,12 @@ const route = useRoute();
 
 const page = ref(route.query.page ? parseInt(route.query.page) : 1);
 const total = ref(0);
+
+const filters = reactive({
+    with_like_title: '',
+    with_user_id: '',
+    with_rating: '',
+});
 
 const fetchCategoryArticles = async (filters) => {
     try {
@@ -35,21 +41,21 @@ const fetchCategoryArticles = async (filters) => {
 
 const handlePageChange = async (value) => {
     page.value = value;
-    await fetchCategoryArticles();
-}
-
-const handleFilter = async (filters) => {
     await fetchCategoryArticles(filters);
 }
 
 onMounted(async () => {
     await fetchCategoryArticles();
 });
+
+watch(filters, async () => {
+    await handlePageChange(1);
+}, { deep: true });
 </script>
 
 <template>
     <div class="w-full max-w-4xl mx-auto">
-        <Filters @filter="handleFilter" />
+        <Filters :filters="filters" />
 
         <ArticleCard
             v-if="articles.length > 0"

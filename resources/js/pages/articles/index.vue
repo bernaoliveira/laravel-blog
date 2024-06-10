@@ -1,12 +1,16 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 
 import ArticleCard from "../../components/ArticleCard.vue";
 import { useArticles } from "../../composables/useArticles";
 import Pagination from "../../components/Pagination.vue";
 import Filters from "../../components/Filters.vue";
 
-const search = ref('');
+const filters = reactive({
+    with_like_title: '',
+    with_user_id: '',
+    with_rating: '',
+});
 const categories = ref([]);
 
 const { articles, fetchArticles, changePage, page, total } = useArticles();
@@ -27,26 +31,26 @@ const fetchCategories = async () => {
     }
 }
 
-const handleFilter = async (filters) => {
-    await changePage(1, filters);
-}
-
 const handlePageChange = async (value) => {
-    await changePage(value, { with_like_title: search.value });
+    await changePage(value, filters);
 
     container.value?.scrollIntoView({ behavior: 'smooth' });
 }
 
 onMounted(async () => {
-    await fetchArticles({ with_like_title: search.value });
+    await fetchArticles(filters);
     await fetchCategories();
 });
+
+watch(filters, async () => {
+    await changePage(1, filters);
+}, { deep: true });
 </script>
 
 <template>
     <div ref="container" class="flex">
         <div class="w-full max-w-4xl">
-            <Filters @filter="handleFilter" />
+            <Filters :filters="filters" />
 
             <ArticleCard
                 v-if="articles.length > 0"

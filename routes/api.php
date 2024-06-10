@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +43,8 @@ Route::prefix('categories')->group(function () {
         Route::put('{slug}', [CategoryController::class, 'update']);
         Route::delete('{slug}', [CategoryController::class, 'destroy']);
     });
+});
+
+Route::prefix('authors')->group(function () {
+    Route::get('/', [AuthorController::class, 'index']);
 });

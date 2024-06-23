@@ -4,7 +4,6 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        image: 'php:8.3-fpm'
         volumes:
             - .:/var/www
             - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
@@ -34,3 +33,13 @@ services:
         image: 'redis:latest'
         ports:
             - '6379:6379'
+    horizon:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: php artisan horizon
+        volumes:
+            - .:/var/www
+        depends_on:
+            app:
+                condition: service_started

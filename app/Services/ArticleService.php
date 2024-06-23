@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\User\UserRole;
 use App\Http\Requests\CreateArticlePostRequest;
+use App\Jobs\UpdateArticleRatingJob;
 use App\Models\Article;
 use App\Utils\FilteredList;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -66,10 +67,7 @@ class ArticleService
 
     public function updateRating($article)
     {
-        $rating = round($article->rates->avg('value'), 1);
-        $article->update([
-            $article::FIELD_RATING => $rating,
-        ]);
+        UpdateArticleRatingJob::dispatch($article);
     }
 
     private function generateSlug($title)

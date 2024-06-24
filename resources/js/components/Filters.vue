@@ -3,7 +3,16 @@ import {onMounted, ref, toRef} from "vue";
 
 const $emit = defineEmits(['filter']);
 
-const { filters } = defineProps(['filters']);
+const { filters } = defineProps({
+    filters: {
+        type: Object,
+        required: true,
+    },
+    hideAuthors: {
+        type: Boolean,
+        default: false,
+    },
+});
 const authors = ref([]);
 
 const search = toRef(filters, 'with_like_title');
@@ -59,7 +68,7 @@ onMounted(() => {
                 </select>
             </div>
 
-            <div class="flex-1">
+            <div v-if="!hideAuthors" class="flex-1">
                 <label for="authors" class="block mb-2 text-sm font-medium text-gray-900">Author</label>
                 <select v-model="author" id="authors" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     <option value="">Choose an author</option>

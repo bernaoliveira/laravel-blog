@@ -1,6 +1,14 @@
 <script setup>
-
 import Header from "./components/Header.vue";
+import { useUserStore } from "./store/user";
+import { useRoute } from "vue-router";
+
+const { fetchUser } = useUserStore();
+const route = useRoute();
+
+if (route.name !== 'auth') {
+    fetchUser();
+}
 </script>
 
 <template>

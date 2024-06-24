@@ -10,8 +10,10 @@
                     <router-link to="/" class="text-xl font-bold text-gray-800 md:text-2xl">Blog</router-link>
                 </div>
             </div>
-            <div class="flex-col flex flex-row -mx-4">
+            <div class="flex flex-row -mx-4">
                 <router-link to="/" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Home</router-link>
+                <router-link to="/profile" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">My Articles</router-link>
+                <router-link to="/profile" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Create article</router-link>
             </div>
         </div>
     </nav>

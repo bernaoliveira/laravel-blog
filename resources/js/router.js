@@ -6,6 +6,16 @@ const routes = [
         component: () => import("./pages/articles/index.vue"),
     },
     {
+        name: "auth",
+        path: "/auth",
+        component: () => import("./pages/auth/index.vue"),
+    },
+    {
+        name: "profile",
+        path: "/profile",
+        component: () => import("./pages/profile/index.vue"),
+    },
+    {
         name: "categoriesArticles",
         path: "/categories/:slug",
         component: () => import("./pages/categories/articles.vue"),

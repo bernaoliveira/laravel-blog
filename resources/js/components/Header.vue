@@ -1,5 +1,7 @@
 <script setup>
+import {useUserStore} from "../store/user";
 
+const { isAuthenticated } = useUserStore();
 </script>
 
 <template>
@@ -12,8 +14,8 @@
             </div>
             <div class="flex flex-row -mx-4">
                 <router-link to="/" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Home</router-link>
-                <router-link to="/profile" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">My Articles</router-link>
-                <router-link to="/profile" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Create article</router-link>
+                <router-link v-if="isAuthenticated" to="/profile" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">My Articles</router-link>
+                <router-link v-if="isAuthenticated" to="/profile" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Create article</router-link>
             </div>
         </div>
     </nav>

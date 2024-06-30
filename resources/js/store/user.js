@@ -8,9 +8,9 @@ export const useUserStore = defineStore('user', {
     actions: {
         async fetchUser() {
             const response = await fetch('/api/user');
-            const data = await response.json();
 
             if (response.ok) {
+                const data = await response.json();
                 this.user = data.user;
             } else {
                 this.user = null;

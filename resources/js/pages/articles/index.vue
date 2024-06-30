@@ -82,7 +82,7 @@ watch(filters, async () => {
                         class="flex items-center justify-between py-2"
                     >
                         <router-link
-                            :to="{ name: 'categoriesArticles', params: {slug: category.slug}}"
+                            :to="{ name: 'categories.articles', params: {slug: category.slug}}"
                             class="text-gray-700 hover:underline"
                         >
                             {{ category.name }}

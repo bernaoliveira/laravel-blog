@@ -1,4 +1,7 @@
 <script setup>
+import {useUserStore} from "../store/user";
+import {computed, toRef} from "vue";
+
 /**
  * Article {
  *     id: number;
@@ -28,6 +31,11 @@
  * }
  */
 const { article } = defineProps(['article']);
+
+const user = toRef(useUserStore(), 'user');
+
+const titleComponent = computed(() => article?.user?.id === user.value?.id ? 'router-link' : 'h2');
+const titleLink = computed(() => article?.user?.id === user.value?.id ? `/articles/edit/${article.slug}` : null);
 </script>
 
 <template>
@@ -46,13 +54,14 @@ const { article } = defineProps(['article']);
             </div>
         </div>
         <div class="mt-2">
-            <router-link
-                to="/"
+            <component
+                :is="titleComponent"
+                :to="titleLink"
                 class="text-2xl font-bold text-gray-700 hover:underline"
             >
                 ({{ article.rating }})
                 {{ article.title }}
-            </router-link>
+            </component>
 
             <p class="mt-2 text-gray-600">
                 {{ article.content }}

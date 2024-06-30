@@ -15,7 +15,8 @@ const { isAuthenticated } = useUserStore();
             <div class="flex flex-row -mx-4">
                 <router-link to="/" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Home</router-link>
                 <router-link v-if="isAuthenticated" to="/profile" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">My Articles</router-link>
-                <router-link v-if="isAuthenticated" to="/profile" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Create article</router-link>
+                <router-link v-if="isAuthenticated" to="/articles/create" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Create article</router-link>
+                <router-link v-if="!isAuthenticated" to="/auth" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Login</router-link>
             </div>
         </div>
     </nav>

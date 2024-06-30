@@ -16,10 +16,20 @@ const routes = [
         component: () => import("./pages/profile/index.vue"),
     },
     {
-        name: "categoriesArticles",
+        name: "categories.articles",
         path: "/categories/:slug",
         component: () => import("./pages/categories/articles.vue"),
-    }
+    },
+    {
+        name: "articles.create",
+        path: "/articles/create",
+        component: () => import("./pages/articles/detail.vue"),
+    },
+    {
+        name: "articles.edit",
+        path: "/articles/edit/:slug",
+        component: () => import("./pages/articles/detail.vue"),
+    },
 ];
 
 export default createRouter({

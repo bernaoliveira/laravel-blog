@@ -10,6 +10,7 @@ services:
         working_dir: /var/www/
         ports:
             - '9000:9000'
+            - '5137:5137'
     nginx:
         image: 'nginx:alpine'
         ports:

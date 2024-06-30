@@ -41,8 +41,10 @@ RUN pecl install redis && docker-php-ext-enable redis
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN npm install
+RUN npm install --force
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
+# Expose vite dev server port
+EXPOSE 5137
 CMD ["php-fpm"]

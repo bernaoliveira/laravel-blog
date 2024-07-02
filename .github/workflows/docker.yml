@@ -7,12 +7,19 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker images
-      run: docker-compose up --build -d && docker-compose exec app composer install && docker-compose exec app php artisan migrate && docker-compose exec app php artisan optimize:clear && docker-compose exec app npm run build
+      - uses: actions/checkout@v4
+
+      - name: Run docker-compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker-compose.yml"
+          services: |
+            app
+            nginx
+            postgres
+            redis
+            horizon
